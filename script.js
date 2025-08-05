@@ -3,8 +3,6 @@ const mobileMenu = document.getElementById('mobile-menu');
 const navMenu = document.querySelector('.nav-menu');
 const navbar = document.querySelector('.navbar');
 const statNumbers = document.querySelectorAll('.stat-number');
-const buyBtn = document.getElementById('buy-btn');
-const newsletterForm = document.querySelector('.newsletter-form');
 
 // Mobile Navigation Toggle
 mobileMenu.addEventListener('click', () => {
@@ -113,118 +111,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     // Observe all cards for loading animation
-    document.querySelectorAll('.about-card, .timeline-item, .community-link').forEach(card => {
+    document.querySelectorAll('.about-card, .community-link').forEach(card => {
         card.classList.add('loading');
         observer.observe(card);
     });
-    
-    // Initialize tokenomics chart
-    createTokenomicsChart();
-});
-
-// Tokenomics Chart
-function createTokenomicsChart() {
-    const ctx = document.getElementById('tokenomicsChart');
-    if (!ctx) return;
-    
-    new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-            labels: ['Liquidity Pool', 'Community', 'Marketing', 'Team'],
-            datasets: [{
-                data: [40, 35, 20, 5],
-                backgroundColor: [
-                    '#2E8B57',
-                    '#1E90FF',
-                    '#20B2AA',
-                    '#32CD32'
-                ],
-                borderWidth: 0,
-                cutout: '60%'
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: true,
-            plugins: {
-                legend: {
-                    position: 'bottom',
-                    labels: {
-                        color: '#fff',
-                        usePointStyle: true,
-                        padding: 20,
-                        font: {
-                            size: 14,
-                            weight: '500'
-                        }
-                    }
-                },
-                tooltip: {
-                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                    titleColor: '#fff',
-                    bodyColor: '#fff',
-                    borderColor: '#2E8B57',
-                    borderWidth: 1,
-                    callbacks: {
-                        label: function(context) {
-                            return context.label + ': ' + context.parsed + '%';
-                        }
-                    }
-                }
-            },
-            animation: {
-                animateRotate: true,
-                duration: 2000,
-                easing: 'easeOutQuart'
-            }
-        }
-    });
-}
-
-// Buy Button Click Handler
-buyBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    
-    // Add loading animation
-    const originalText = buyBtn.innerHTML;
-    buyBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Connecting...';
-    buyBtn.style.pointerEvents = 'none';
-    
-    // Simulate connection delay
-    setTimeout(() => {
-        buyBtn.innerHTML = originalText;
-        buyBtn.style.pointerEvents = 'auto';
-        
-        // Show alert (in real implementation, this would connect to a wallet)
-        showNotification('🚀 Wallet connection would happen here! This is a demo for OFAN Coin.', 'info');
-    }, 2000);
-});
-
-// Newsletter Form Handler
-newsletterForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    
-    const email = newsletterForm.querySelector('input[type="email"]').value;
-    const button = newsletterForm.querySelector('button');
-    const originalText = button.innerHTML;
-    
-    // Validate email
-    if (!isValidEmail(email)) {
-        showNotification('❌ Please enter a valid email address', 'error');
-        return;
-    }
-    
-    // Show loading state
-    button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Subscribing...';
-    button.style.pointerEvents = 'none';
-    
-    // Simulate API call
-    setTimeout(() => {
-        button.innerHTML = originalText;
-        button.style.pointerEvents = 'auto';
-        newsletterForm.reset();
-        showNotification('🎉 Welcome to the OFAN family! Check your email for confirmation.', 'success');
-    }, 1500);
 });
 
 // Email validation
@@ -368,7 +258,7 @@ window.addEventListener('scroll', () => {
 });
 
 // Add floating animation to cards on hover
-document.querySelectorAll('.about-card, .timeline-content, .community-link').forEach(card => {
+document.querySelectorAll('.about-card, .community-link').forEach(card => {
     card.addEventListener('mouseenter', () => {
         card.style.transform = 'translateY(-10px) scale(1.02)';
     });
