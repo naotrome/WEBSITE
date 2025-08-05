@@ -2,7 +2,6 @@
 const mobileMenu = document.getElementById('mobile-menu');
 const navMenu = document.querySelector('.nav-menu');
 const navbar = document.querySelector('.navbar');
-const statNumbers = document.querySelectorAll('.stat-number');
 
 // Mobile Navigation Toggle
 mobileMenu.addEventListener('click', () => {
@@ -62,23 +61,6 @@ function updateScrollIndicator() {
     indicator.style.width = scrolled + '%';
 }
 
-// Counter Animation for Hero Stats
-function animateCounter(element, target, duration = 2000) {
-    const start = 0;
-    const increment = target / (duration / 16);
-    let current = start;
-    
-    const timer = setInterval(() => {
-        current += increment;
-        if (current >= target) {
-            element.textContent = target.toLocaleString();
-            clearInterval(timer);
-        } else {
-            element.textContent = Math.floor(current).toLocaleString();
-        }
-    }, 16);
-}
-
 // Intersection Observer for animations
 const observerOptions = {
     threshold: 0.1,
@@ -88,14 +70,6 @@ const observerOptions = {
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
-            // Animate counters when hero stats come into view
-            if (entry.target.classList.contains('hero-stats')) {
-                statNumbers.forEach(stat => {
-                    const target = parseInt(stat.getAttribute('data-target'));
-                    animateCounter(stat, target);
-                });
-            }
-            
             // Add loading animation to sections
             entry.target.classList.add('loaded');
         }
@@ -104,12 +78,6 @@ const observer = new IntersectionObserver((entries) => {
 
 // Observe elements for animations
 document.addEventListener('DOMContentLoaded', () => {
-    // Observe hero stats
-    const heroStats = document.querySelector('.hero-stats');
-    if (heroStats) {
-        observer.observe(heroStats);
-    }
-    
     // Observe all cards for loading animation
     document.querySelectorAll('.about-card, .community-link').forEach(card => {
         card.classList.add('loading');
