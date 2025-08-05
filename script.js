@@ -135,9 +135,9 @@ function createTokenomicsChart() {
             datasets: [{
                 data: [50, 30, 15, 5],
                 backgroundColor: [
-                    '#667eea',
-                    '#764ba2',
-                    '#ff6b6b',
+                    '#22c55e',
+                    '#16a34a',
+                    '#dcfce7',
                     '#4ade80'
                 ],
                 borderWidth: 0,
@@ -164,7 +164,7 @@ function createTokenomicsChart() {
                     backgroundColor: 'rgba(0, 0, 0, 0.8)',
                     titleColor: '#fff',
                     bodyColor: '#fff',
-                    borderColor: '#667eea',
+                    borderColor: '#22c55e',
                     borderWidth: 1,
                     callbacks: {
                         label: function(context) {
@@ -273,7 +273,7 @@ function showNotification(message, type = 'info') {
     const colors = {
         success: 'linear-gradient(135deg, #4ade80, #22c55e)',
         error: 'linear-gradient(135deg, #ef4444, #dc2626)',
-        info: 'linear-gradient(135deg, #667eea, #764ba2)'
+        info: 'linear-gradient(135deg, #22c55e, #16a34a)'
     };
     notification.style.background = colors[type] || colors.info;
     
