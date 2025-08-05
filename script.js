@@ -347,22 +347,75 @@ document.querySelectorAll('.community-link').forEach(link => {
 
 // Floating animation for hero elements
 function addFloatingAnimation() {
-    const floatingElements = document.querySelectorAll('.floating-doge, .moon, .star');
+    const floatingElements = document.querySelectorAll('.realistic-dog, .moon, .star');
     
     floatingElements.forEach((element, index) => {
-        const amplitude = 10 + (index * 5);
-        const frequency = 0.02 + (index * 0.01);
+        const amplitude = 8 + (index * 3);
+        const frequency = 0.015 + (index * 0.008);
         let startTime = Date.now();
         
         function animate() {
             const elapsed = Date.now() - startTime;
             const y = Math.sin(elapsed * frequency) * amplitude;
-            element.style.transform = `translateY(${y}px)`;
+            
+            // For the realistic dog, combine floating with breathing animation
+            if (element.classList.contains('realistic-dog')) {
+                const breathingScale = 1 + Math.sin(elapsed * 0.01) * 0.02;
+                element.style.transform = `translateY(${y}px) scale(${breathingScale})`;
+            } else {
+                element.style.transform = `translateY(${y}px)`;
+            }
             requestAnimationFrame(animate);
         }
         
         animate();
     });
+}
+
+// Add interactive dog features
+function addDogInteractivity() {
+    const realisticDog = document.querySelector('.realistic-dog');
+    const dogTongue = document.querySelector('.dog-tongue');
+    const dogEars = document.querySelectorAll('.dog-ear-left, .dog-ear-right');
+    
+    if (realisticDog) {
+        // Dog responds to clicks
+        realisticDog.addEventListener('click', () => {
+            // Happy panting animation
+            dogTongue.style.animation = 'tongueWag 0.5s ease-in-out 3';
+            
+            // Ear wiggle
+            dogEars.forEach(ear => {
+                ear.style.animation = 'earFlap 0.8s ease-in-out 2';
+            });
+            
+            // Show notification
+            showNotification('🐕 Woof! DogeMoon says hello! Much interactive! 🚀', 'success');
+            
+            // Reset animations after completion
+            setTimeout(() => {
+                dogTongue.style.animation = 'tongueWag 2s ease-in-out infinite';
+                dogEars.forEach(ear => {
+                    ear.style.animation = 'earFlap 4s ease-in-out infinite';
+                });
+            }, 2000);
+        });
+        
+        // Dog follows mouse slightly
+        document.addEventListener('mousemove', (e) => {
+            const rect = realisticDog.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            
+            const deltaX = (e.clientX - centerX) * 0.02;
+            const deltaY = (e.clientY - centerY) * 0.02;
+            
+            const eyes = document.querySelectorAll('.dog-eye-left, .dog-eye-right');
+            eyes.forEach(eye => {
+                eye.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+            });
+        });
+    }
 }
 
 // Initialize everything when DOM is loaded
@@ -373,6 +426,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Add floating animations
     addFloatingAnimation();
     
+    // Add dog interactivity
+    addDogInteractivity();
+    
     // Add loading class to sections for animation
     document.querySelectorAll('section').forEach(section => {
         section.classList.add('loading');
@@ -382,7 +438,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize scroll indicator
     updateScrollIndicator();
     
-    console.log('🚀 DogeMoon website loaded! Ready for moon mission!');
+    console.log('🚀 DogeMoon website loaded with realistic dog! Ready for moon mission!');
 });
 
 // Add some Easter eggs for fun
