@@ -1,467 +1,476 @@
-// DOM Elements
-const mobileMenu = document.getElementById('mobile-menu');
-const navMenu = document.querySelector('.nav-menu');
-const navbar = document.querySelector('.navbar');
-const statNumbers = document.querySelectorAll('.stat-number');
-const buyBtn = document.getElementById('buy-btn');
-const newsletterForm = document.querySelector('.newsletter-form');
-
-// Mobile Navigation Toggle
-mobileMenu.addEventListener('click', () => {
-    navMenu.classList.toggle('active');
-    
-    // Animate hamburger menu
-    const bars = mobileMenu.querySelectorAll('.bar');
-    bars.forEach((bar, index) => {
-        bar.style.transform = navMenu.classList.contains('active') 
-            ? `rotate(${index === 0 ? 45 : index === 2 ? -45 : 0}deg) translate(${index === 1 ? '100px' : '0'}, ${index === 0 ? '8px' : index === 2 ? '-8px' : '0'})`
-            : 'none';
-        bar.style.opacity = navMenu.classList.contains('active') && index === 1 ? '0' : '1';
-    });
-});
-
-// Close mobile menu when clicking on nav links
-document.querySelectorAll('.nav-link').forEach(link => {
-    link.addEventListener('click', () => {
-        navMenu.classList.remove('active');
-        const bars = mobileMenu.querySelectorAll('.bar');
-        bars.forEach(bar => {
-            bar.style.transform = 'none';
-            bar.style.opacity = '1';
-        });
-    });
-});
-
-// Navbar scroll effect
-window.addEventListener('scroll', () => {
-    const scrolled = window.pageYOffset;
-    const rate = scrolled * -0.5;
-    
-    // Navbar background opacity
-    if (scrolled > 100) {
-        navbar.style.background = 'rgba(255, 255, 255, 0.98)';
-        navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
-    } else {
-        navbar.style.background = 'rgba(255, 255, 255, 0.95)';
-        navbar.style.boxShadow = 'none';
-    }
-
-    // Scroll progress indicator
-    updateScrollIndicator();
-});
-
-// Scroll Progress Indicator
-function updateScrollIndicator() {
-    const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-    const scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
-    const clientHeight = document.documentElement.clientHeight || document.body.clientHeight;
-    const scrolled = (scrollTop / (scrollHeight - clientHeight)) * 100;
-    
-    // Create scroll indicator if it doesn't exist
-    let indicator = document.querySelector('.scroll-indicator');
-    if (!indicator) {
-        indicator = document.createElement('div');
-        indicator.className = 'scroll-indicator';
-        document.body.appendChild(indicator);
-    }
-    
-    indicator.style.width = scrolled + '%';
-}
-
-// Counter Animation for Hero Stats
-function animateCounter(element, target, duration = 2000) {
-    const start = 0;
-    const increment = target / (duration / 16);
-    let current = start;
-    
-    const timer = setInterval(() => {
-        current += increment;
-        if (current >= target) {
-            element.textContent = target.toLocaleString();
-            clearInterval(timer);
-        } else {
-            element.textContent = Math.floor(current).toLocaleString();
-        }
-    }, 16);
-}
-
-// Intersection Observer for animations
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-};
-
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            // Animate counters when hero stats come into view
-            if (entry.target.classList.contains('hero-stats')) {
-                statNumbers.forEach(stat => {
-                    const target = parseInt(stat.getAttribute('data-target'));
-                    animateCounter(stat, target);
-                });
-            }
-            
-            // Add loading animation to sections
-            entry.target.classList.add('loaded');
-        }
-    });
-}, observerOptions);
-
-// Observe elements for animations
-document.addEventListener('DOMContentLoaded', () => {
-    // Observe hero stats
-    const heroStats = document.querySelector('.hero-stats');
-    if (heroStats) {
-        observer.observe(heroStats);
-    }
-    
-    // Observe all cards for loading animation
-    document.querySelectorAll('.about-card, .timeline-item, .community-link').forEach(card => {
-        card.classList.add('loading');
-        observer.observe(card);
-    });
-});
-
-// Tokenomics Chart
-function createTokenomicsChart() {
-    const ctx = document.getElementById('tokenomicsChart');
-    if (!ctx) return;
-    
-    new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-            labels: ['Liquidity Pool', 'Community', 'Marketing', 'Team'],
-            datasets: [{
-                data: [50, 30, 15, 5],
-                backgroundColor: [
-                    '#667eea',
-                    '#764ba2',
-                    '#ff6b6b',
-                    '#4ade80'
-                ],
-                borderWidth: 0,
-                cutout: '60%'
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: true,
-            plugins: {
-                legend: {
-                    position: 'bottom',
-                    labels: {
-                        color: '#fff',
-                        usePointStyle: true,
-                        padding: 20,
-                        font: {
-                            size: 14,
-                            weight: '500'
-                        }
-                    }
-                },
-                tooltip: {
-                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                    titleColor: '#fff',
-                    bodyColor: '#fff',
-                    borderColor: '#667eea',
-                    borderWidth: 1,
-                    callbacks: {
-                        label: function(context) {
-                            return context.label + ': ' + context.parsed + '%';
-                        }
-                    }
-                }
-            },
-            animation: {
-                animateRotate: true,
-                duration: 2000,
-                easing: 'easeOutQuart'
-            }
-        }
-    });
-}
-
-// Buy Button Click Handler
-buyBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    
-    // Add loading animation
-    const originalText = buyBtn.innerHTML;
-    buyBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Connecting...';
-    buyBtn.style.pointerEvents = 'none';
-    
-    // Simulate connection delay
-    setTimeout(() => {
-        buyBtn.innerHTML = originalText;
-        buyBtn.style.pointerEvents = 'auto';
+// TotheNineCloud (T9C) Web3 Integration
+class TotheNineCloudApp {
+    constructor() {
+        this.web3 = null;
+        this.account = null;
+        this.contract = null;
+        this.contractAddress = null; // Will be set after deployment
+        this.contractABI = [
+            // Essential ABI for TotheNineCloud contract
+            "function name() view returns (string)",
+            "function symbol() view returns (string)",
+            "function decimals() view returns (uint8)",
+            "function totalSupply() view returns (uint256)",
+            "function balanceOf(address) view returns (uint256)",
+            "function transfer(address to, uint256 amount) returns (bool)",
+            "function allowance(address owner, address spender) view returns (uint256)",
+            "function approve(address spender, uint256 amount) returns (bool)",
+            "function transferFrom(address from, address to, uint256 amount) returns (bool)",
+            "function maxTransactionAmount() view returns (uint256)",
+            "function maxWalletAmount() view returns (uint256)",
+            "function reflectionFee() view returns (uint256)",
+            "function totalFees() view returns (uint256)",
+            "function isExcludedFromFee(address) view returns (bool)",
+            "function burn(uint256 amount)",
+            "event Transfer(address indexed from, address indexed to, uint256 value)",
+            "event CloudReached(address indexed holder, uint256 amount)",
+            "event AntiWhaleTriggered(address indexed whale, uint256 attemptedAmount)"
+        ];
         
-        // Show alert (in real implementation, this would connect to a wallet)
-        showNotification('🚀 Wallet connection would happen here! This is a demo.', 'info');
-    }, 2000);
-});
-
-// Newsletter Form Handler
-newsletterForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    
-    const email = newsletterForm.querySelector('input[type="email"]').value;
-    const button = newsletterForm.querySelector('button');
-    const originalText = button.innerHTML;
-    
-    // Validate email
-    if (!isValidEmail(email)) {
-        showNotification('❌ Please enter a valid email address', 'error');
-        return;
+        this.init();
     }
-    
-    // Show loading state
-    button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Subscribing...';
-    button.style.pointerEvents = 'none';
-    
-    // Simulate API call
-    setTimeout(() => {
-        button.innerHTML = originalText;
-        button.style.pointerEvents = 'auto';
-        newsletterForm.reset();
-        showNotification('🎉 Welcome to the moon mission! Check your email for confirmation.', 'success');
-    }, 1500);
-});
 
-// Email validation
-function isValidEmail(email) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-}
+    async init() {
+        this.setupEventListeners();
+        this.initializeAnimations();
+        this.createTokenomicsChart();
+        this.startCloudAnimation();
+        this.checkWalletConnection();
+    }
 
-// Notification System
-function showNotification(message, type = 'info') {
-    // Remove existing notifications
-    const existingNotifications = document.querySelectorAll('.notification');
-    existingNotifications.forEach(notification => notification.remove());
-    
-    const notification = document.createElement('div');
-    notification.className = `notification notification-${type}`;
-    notification.innerHTML = `
-        <span>${message}</span>
-        <button class="notification-close">&times;</button>
-    `;
-    
-    // Add styles
-    Object.assign(notification.style, {
-        position: 'fixed',
-        top: '100px',
-        right: '20px',
-        padding: '15px 20px',
-        borderRadius: '10px',
-        color: 'white',
-        fontSize: '14px',
-        fontWeight: '500',
-        maxWidth: '400px',
-        zIndex: '10000',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        gap: '10px',
-        opacity: '0',
-        transform: 'translateX(100%)',
-        transition: 'all 0.3s ease',
-        boxShadow: '0 10px 30px rgba(0, 0, 0, 0.2)'
-    });
-    
-    // Set background color based on type
-    const colors = {
-        success: 'linear-gradient(135deg, #4ade80, #22c55e)',
-        error: 'linear-gradient(135deg, #ef4444, #dc2626)',
-        info: 'linear-gradient(135deg, #667eea, #764ba2)'
-    };
-    notification.style.background = colors[type] || colors.info;
-    
-    document.body.appendChild(notification);
-    
-    // Animate in
-    setTimeout(() => {
-        notification.style.opacity = '1';
-        notification.style.transform = 'translateX(0)';
-    }, 100);
-    
-    // Close button functionality
-    const closeBtn = notification.querySelector('.notification-close');
-    closeBtn.style.cssText = `
-        background: none;
-        border: none;
-        color: white;
-        font-size: 20px;
-        cursor: pointer;
-        padding: 0;
-        margin-left: 10px;
-    `;
-    
-    const closeNotification = () => {
-        notification.style.opacity = '0';
-        notification.style.transform = 'translateX(100%)';
-        setTimeout(() => notification.remove(), 300);
-    };
-    
-    closeBtn.addEventListener('click', closeNotification);
-    
-    // Auto close after 5 seconds
-    setTimeout(closeNotification, 5000);
-}
+    setupEventListeners() {
+        // Wallet connection
+        document.getElementById('connectWallet')?.addEventListener('click', () => this.connectWallet());
+        document.getElementById('disconnectWallet')?.addEventListener('click', () => this.disconnectWallet());
+        document.getElementById('closeWallet')?.addEventListener('click', () => this.closeWalletPanel());
+        document.getElementById('refreshBalance')?.addEventListener('click', () => this.refreshBalance());
 
-// Smooth scrolling for navigation links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            const offsetTop = target.offsetTop - 80; // Account for fixed navbar
-            window.scrollTo({
-                top: offsetTop,
-                behavior: 'smooth'
+        // Token actions
+        document.getElementById('buyTokenBtn')?.addEventListener('click', () => this.showBuyModal());
+        document.getElementById('viewChartBtn')?.addEventListener('click', () => this.openChart());
+
+        // Mobile menu
+        document.getElementById('mobileMenuToggle')?.addEventListener('click', () => this.toggleMobileMenu());
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = document.querySelector(anchor.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
             });
-        }
-    });
-});
+        });
 
-// Parallax effect for hero section
-window.addEventListener('scroll', () => {
-    const scrolled = window.pageYOffset;
-    const hero = document.querySelector('.hero');
-    if (hero && scrolled < hero.offsetHeight) {
-        const rate = scrolled * -0.5;
-        hero.style.transform = `translate3d(0, ${rate}px, 0)`;
+        // Scroll effects
+        window.addEventListener('scroll', () => this.handleScroll());
     }
-});
 
-// Add hover effects to community links
-document.querySelectorAll('.community-link').forEach(link => {
-    link.addEventListener('mouseenter', () => {
-        link.style.transform = 'translateY(-5px) scale(1.02)';
-    });
-    
-    link.addEventListener('mouseleave', () => {
-        link.style.transform = 'translateY(0) scale(1)';
-    });
-});
+    async connectWallet() {
+        try {
+            if (typeof window.ethereum === 'undefined') {
+                this.showNotification('Please install MetaMask to connect your wallet!', 'error');
+                return;
+            }
 
-// Floating animation for hero elements
-function addFloatingAnimation() {
-    const floatingElements = document.querySelectorAll('.floating-doge, .moon, .star');
-    
-    floatingElements.forEach((element, index) => {
-        const amplitude = 10 + (index * 5);
-        const frequency = 0.02 + (index * 0.01);
-        let startTime = Date.now();
-        
-        function animate() {
-            const elapsed = Date.now() - startTime;
-            const y = Math.sin(elapsed * frequency) * amplitude;
-            element.style.transform = `translateY(${y}px)`;
-            requestAnimationFrame(animate);
-        }
-        
-        animate();
-    });
-}
+            // Request account access
+            const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+            this.account = accounts[0];
 
-// Initialize everything when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    // Create tokenomics chart
-    createTokenomicsChart();
-    
-    // Add floating animations
-    addFloatingAnimation();
-    
-    // Add loading class to sections for animation
-    document.querySelectorAll('section').forEach(section => {
-        section.classList.add('loading');
-        observer.observe(section);
-    });
-    
-    // Initialize scroll indicator
-    updateScrollIndicator();
-    
-    console.log('🚀 DogeMoon website loaded! Ready for moon mission!');
-});
+            // Initialize ethers
+            const provider = new ethers.providers.Web3Provider(window.ethereum);
+            this.web3 = provider;
 
-// Add some Easter eggs for fun
-let konamiCode = [];
-const konamiSequence = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65]; // ↑↑↓↓←→←→BA
+            // Update UI
+            this.updateWalletUI();
+            this.showWalletPanel();
+            this.showNotification('Wallet connected successfully! ☁️', 'success');
 
-document.addEventListener('keydown', (e) => {
-    konamiCode.push(e.keyCode);
-    if (konamiCode.length > konamiSequence.length) {
-        konamiCode.shift();
-    }
-    
-    if (konamiCode.length === konamiSequence.length && 
-        konamiCode.every((code, index) => code === konamiSequence[index])) {
-        showNotification('🎮 Konami Code activated! Much wow, very secret! 🚀🌙', 'success');
-        
-        // Add rainbow animation to the logo
-        const logo = document.querySelector('.nav-logo');
-        logo.style.animation = 'rainbow 2s linear infinite';
-        
-        // Add rainbow keyframes if they don't exist
-        if (!document.querySelector('#rainbow-keyframes')) {
-            const style = document.createElement('style');
-            style.id = 'rainbow-keyframes';
-            style.textContent = `
-                @keyframes rainbow {
-                    0% { filter: hue-rotate(0deg); }
-                    100% { filter: hue-rotate(360deg); }
+            // Listen for account changes
+            window.ethereum.on('accountsChanged', (accounts) => {
+                if (accounts.length === 0) {
+                    this.disconnectWallet();
+                } else {
+                    this.account = accounts[0];
+                    this.updateWalletUI();
                 }
-            `;
-            document.head.appendChild(style);
+            });
+
+            // Listen for network changes
+            window.ethereum.on('chainChanged', () => {
+                window.location.reload();
+            });
+
+        } catch (error) {
+            console.error('Error connecting wallet:', error);
+            this.showNotification('Failed to connect wallet. Please try again.', 'error');
+        }
+    }
+
+    disconnectWallet() {
+        this.account = null;
+        this.web3 = null;
+        this.contract = null;
+        this.updateWalletUI();
+        this.closeWalletPanel();
+        this.showNotification('Wallet disconnected', 'info');
+    }
+
+    async checkWalletConnection() {
+        if (typeof window.ethereum !== 'undefined') {
+            try {
+                const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+                if (accounts.length > 0) {
+                    this.account = accounts[0];
+                    const provider = new ethers.providers.Web3Provider(window.ethereum);
+                    this.web3 = provider;
+                    this.updateWalletUI();
+                }
+            } catch (error) {
+                console.error('Error checking wallet connection:', error);
+            }
+        }
+    }
+
+    updateWalletUI() {
+        const connectBtn = document.getElementById('connectWallet');
+        const walletAddress = document.getElementById('walletAddress');
+
+        if (this.account) {
+            connectBtn.innerHTML = `<i class="fas fa-wallet"></i> ${this.account.substring(0, 6)}...${this.account.substring(38)}`;
+            connectBtn.classList.add('connected');
+            if (walletAddress) {
+                walletAddress.textContent = `${this.account.substring(0, 8)}...${this.account.substring(34)}`;
+            }
+            this.refreshBalance();
+        } else {
+            connectBtn.innerHTML = '<i class="fas fa-wallet"></i> Connect Wallet';
+            connectBtn.classList.remove('connected');
+            if (walletAddress) {
+                walletAddress.textContent = 'Not connected';
+            }
+        }
+    }
+
+    async refreshBalance() {
+        if (!this.account || !this.web3) return;
+
+        try {
+            // Get ETH balance
+            const ethBalance = await this.web3.getBalance(this.account);
+            const ethFormatted = parseFloat(ethers.utils.formatEther(ethBalance)).toFixed(4);
+            document.getElementById('ethBalance').textContent = `${ethFormatted} ETH`;
+
+            // Get T9C balance (if contract is deployed)
+            if (this.contractAddress && this.contract) {
+                const t9cBalance = await this.contract.balanceOf(this.account);
+                const t9cFormatted = parseFloat(ethers.utils.formatEther(t9cBalance)).toFixed(2);
+                document.getElementById('t9cBalance').textContent = `${t9cFormatted} T9C`;
+            } else {
+                document.getElementById('t9cBalance').textContent = '0 T9C';
+            }
+        } catch (error) {
+            console.error('Error refreshing balance:', error);
+        }
+    }
+
+    showWalletPanel() {
+        document.getElementById('walletPanel').style.display = 'block';
+    }
+
+    closeWalletPanel() {
+        document.getElementById('walletPanel').style.display = 'none';
+    }
+
+    showBuyModal() {
+        if (!this.account) {
+            this.showNotification('Please connect your wallet first!', 'warning');
+            return;
         }
         
-        konamiCode = [];
+        // For now, show a message about where to buy
+        this.showNotification('T9C will be available on DEXs after launch! Stay tuned! ☁️', 'info');
     }
-});
 
-// Add click counter for logo (another Easter egg)
-let logoClicks = 0;
-document.querySelector('.nav-logo').addEventListener('click', () => {
-    logoClicks++;
-    if (logoClicks === 10) {
-        showNotification('🐕 Wow! Much clicks! Such dedication! Have a treat! 🦴', 'success');
-        logoClicks = 0;
-        
-        // Add bouncing bone emoji
-        const bone = document.createElement('div');
-        bone.innerHTML = '🦴';
-        bone.style.cssText = `
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            font-size: 3rem;
-            z-index: 10000;
-            animation: bounce 1s ease-in-out 3;
-            pointer-events: none;
+    openChart() {
+        // Open DexScreener or similar chart (placeholder)
+        this.showNotification('Chart will be available after DEX listing! 📈', 'info');
+    }
+
+    showNotification(message, type = 'info') {
+        // Create notification element
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        notification.innerHTML = `
+            <span>${message}</span>
+            <button onclick="this.parentElement.remove()">&times;</button>
         `;
-        document.body.appendChild(bone);
-        
-        setTimeout(() => bone.remove(), 3000);
-    }
-});
 
-// Performance optimization: Debounce scroll events
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
+        // Add styles
+        notification.style.cssText = `
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: ${type === 'success' ? '#4ade80' : type === 'error' ? '#ef4444' : type === 'warning' ? '#f59e0b' : '#3b82f6'};
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            max-width: 300px;
+            animation: slideIn 0.3s ease-out;
+        `;
+
+        document.body.appendChild(notification);
+
+        // Auto remove after 5 seconds
+        setTimeout(() => {
+            if (notification.parentElement) {
+                notification.style.animation = 'slideOut 0.3s ease-out';
+                setTimeout(() => notification.remove(), 300);
+            }
+        }, 5000);
+    }
+
+    toggleMobileMenu() {
+        const navLinks = document.querySelector('.nav-links');
+        const toggle = document.getElementById('mobileMenuToggle');
+        
+        navLinks.classList.toggle('mobile-active');
+        toggle.classList.toggle('active');
+    }
+
+    handleScroll() {
+        const navbar = document.querySelector('.navbar');
+        const scrolled = window.pageYOffset > 100;
+        
+        if (scrolled) {
+            navbar.style.background = 'rgba(26, 26, 46, 0.98)';
+        } else {
+            navbar.style.background = 'rgba(26, 26, 46, 0.95)';
+        }
+
+        // Animate elements on scroll
+        this.animateOnScroll();
+    }
+
+    animateOnScroll() {
+        const elements = document.querySelectorAll('.feature-card, .roadmap-item, .community-link');
+        
+        elements.forEach(element => {
+            const elementTop = element.getBoundingClientRect().top;
+            const elementVisible = 150;
+            
+            if (elementTop < window.innerHeight - elementVisible) {
+                element.classList.add('fade-in');
+            }
+        });
+    }
+
+    initializeAnimations() {
+        // Add loading animations
+        const cards = document.querySelectorAll('.feature-card, .tokenomics-card, .roadmap-item');
+        cards.forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                card.style.transition = 'all 0.6s ease';
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, index * 100);
+        });
+
+        // Floating animation for hero elements
+        const floatingElements = document.querySelectorAll('.floating-cloud, .token-logo');
+        floatingElements.forEach(element => {
+            element.style.animation = 'float-up-down 3s ease-in-out infinite';
+        });
+    }
+
+    startCloudAnimation() {
+        // Add dynamic cloud movement
+        const clouds = document.querySelectorAll('.cloud');
+        clouds.forEach((cloud, index) => {
+            const duration = 20 + (index * 5);
+            cloud.style.animationDuration = `${duration}s`;
+        });
+    }
+
+    createTokenomicsChart() {
+        const ctx = document.getElementById('tokenomicsChart');
+        if (!ctx) return;
+
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Liquidity Pool', 'Community', 'Marketing', 'Development', 'Team'],
+                datasets: [{
+                    data: [40, 30, 15, 10, 5],
+                    backgroundColor: [
+                        '#4A90E2',
+                        '#87CEEB',
+                        '#FFD700',
+                        '#98FB98',
+                        '#DDA0DD'
+                    ],
+                    borderColor: '#1a1a2e',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            color: '#ffffff',
+                            padding: 20,
+                            font: {
+                                size: 12,
+                                family: 'Inter'
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    // Contract interaction methods (for when contract is deployed)
+    async initContract(contractAddress) {
+        if (!this.web3 || !contractAddress) return;
+
+        try {
+            this.contractAddress = contractAddress;
+            this.contract = new ethers.Contract(contractAddress, this.contractABI, this.web3.getSigner());
+            
+            // Update contract address in UI
+            document.getElementById('contractAddress').textContent = contractAddress;
+            
+            // Refresh balance with contract data
+            this.refreshBalance();
+            
+            this.showNotification('Contract connected successfully! ☁️', 'success');
+        } catch (error) {
+            console.error('Error initializing contract:', error);
+            this.showNotification('Error connecting to contract', 'error');
+        }
+    }
+
+    async getTokenInfo() {
+        if (!this.contract) return null;
+
+        try {
+            const [name, symbol, decimals, totalSupply, maxTx, maxWallet, reflectionFee] = await Promise.all([
+                this.contract.name(),
+                this.contract.symbol(),
+                this.contract.decimals(),
+                this.contract.totalSupply(),
+                this.contract.maxTransactionAmount(),
+                this.contract.maxWalletAmount(),
+                this.contract.reflectionFee()
+            ]);
+
+            return {
+                name,
+                symbol,
+                decimals,
+                totalSupply: ethers.utils.formatEther(totalSupply),
+                maxTransaction: ethers.utils.formatEther(maxTx),
+                maxWallet: ethers.utils.formatEther(maxWallet),
+                reflectionFee: reflectionFee.toString()
+            };
+        } catch (error) {
+            console.error('Error getting token info:', error);
+            return null;
+        }
+    }
+
+    // Utility methods
+    formatAddress(address) {
+        return `${address.substring(0, 6)}...${address.substring(38)}`;
+    }
+
+    formatNumber(num) {
+        if (num >= 1e9) return (num / 1e9).toFixed(2) + 'B';
+        if (num >= 1e6) return (num / 1e6).toFixed(2) + 'M';
+        if (num >= 1e3) return (num / 1e3).toFixed(2) + 'K';
+        return num.toString();
+    }
 }
 
-// Apply debouncing to scroll events
-const debouncedScrollHandler = debounce(() => {
-    updateScrollIndicator();
-}, 10);
+// Initialize the app when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    window.t9cApp = new TotheNineCloudApp();
+});
 
-window.addEventListener('scroll', debouncedScrollHandler, { passive: true });
+// Add notification animations to CSS
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes slideIn {
+        from {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+
+    @keyframes slideOut {
+        from {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        to {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+    }
+
+    .nav-links.mobile-active {
+        display: flex !important;
+        position: fixed;
+        top: 80px;
+        left: 0;
+        right: 0;
+        background: var(--background-light);
+        flex-direction: column;
+        padding: 2rem;
+        border-top: 1px solid rgba(74, 144, 226, 0.2);
+        z-index: 999;
+    }
+
+    .mobile-menu-toggle.active span:nth-child(1) {
+        transform: rotate(-45deg) translate(-5px, 6px);
+    }
+
+    .mobile-menu-toggle.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .mobile-menu-toggle.active span:nth-child(3) {
+        transform: rotate(45deg) translate(-5px, -6px);
+    }
+
+    .connect-wallet-btn.connected {
+        background: linear-gradient(135deg, #4ade80, #22c55e);
+    }
+
+    @media (max-width: 768px) {
+        .nav-links {
+            display: none;
+        }
+    }
+`;
+document.head.appendChild(style);
+
+// Export for global access
+window.TotheNineCloudApp = TotheNineCloudApp;

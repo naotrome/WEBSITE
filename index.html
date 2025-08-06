@@ -3,166 +3,197 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DogeMoon 🚀 - The Next Big Meme Coin</title>
-    <meta name="description" content="Join the DogeMoon revolution! The ultimate meme coin that's going to the moon 🚀">
+    <title>TotheNineCloud (T9C) - Reach for the Clouds ☁️</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+    <!-- Background Animation -->
+    <div class="cloud-background">
+        <div class="cloud cloud1"></div>
+        <div class="cloud cloud2"></div>
+        <div class="cloud cloud3"></div>
+        <div class="cloud cloud4"></div>
+        <div class="cloud cloud5"></div>
+    </div>
+
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
-            <div class="nav-logo">
-                <span class="logo-icon">🐕</span>
-                <span class="logo-text">DogeMoon</span>
+            <div class="nav-brand">
+                <i class="fas fa-cloud"></i>
+                <span>TotheNineCloud</span>
             </div>
-            <ul class="nav-menu">
-                <li><a href="#home" class="nav-link">Home</a></li>
-                <li><a href="#about" class="nav-link">About</a></li>
-                <li><a href="#tokenomics" class="nav-link">Tokenomics</a></li>
-                <li><a href="#roadmap" class="nav-link">Roadmap</a></li>
-                <li><a href="#community" class="nav-link">Community</a></li>
-            </ul>
-            <div class="nav-toggle" id="mobile-menu">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#tokenomics">Tokenomics</a>
+                <a href="#roadmap">Roadmap</a>
+                <a href="#community">Community</a>
+                <button class="connect-wallet-btn" id="connectWallet">
+                    <i class="fas fa-wallet"></i>
+                    Connect Wallet
+                </button>
+            </div>
+            <div class="mobile-menu-toggle" id="mobileMenuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="hero-container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <h1 class="hero-title">
-                        <span class="gradient-text">DogeMoon</span>
-                        <span class="rocket">🚀</span>
-                    </h1>
-                    <p class="hero-subtitle">The meme coin that's actually going to the moon!</p>
-                    <p class="hero-description">
-                        Join the most diamond-handed community in crypto. We're not just hodling, we're flying! 
-                        Much wow, very moon, such gains! 🌙
-                    </p>
-                    <div class="hero-buttons">
-                        <a href="#" class="btn btn-primary" id="buy-btn">
-                            <i class="fas fa-rocket"></i>
-                            Buy DogeMoon
-                        </a>
-                        <a href="#about" class="btn btn-secondary">
-                            <i class="fas fa-info-circle"></i>
-                            Learn More
-                        </a>
-                    </div>
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">
+                    <span class="gradient-text">TotheNineCloud</span>
+                    <span class="cloud-emoji">☁️</span>
+                </h1>
+                <p class="hero-subtitle">The meme coin that reaches for the clouds!</p>
+                <p class="hero-description">
+                    Join the journey to cloud nine with T9C - a community-driven meme coin featuring 
+                    reflection rewards, anti-whale protection, and endless meme potential.
+                </p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" id="buyTokenBtn">
+                        <i class="fas fa-rocket"></i>
+                        Buy T9C
+                    </button>
+                    <button class="btn btn-secondary" id="viewChartBtn">
+                        <i class="fas fa-chart-line"></i>
+                        View Chart
+                    </button>
                 </div>
-                <div class="hero-visual">
-                    <div class="floating-doge">🐕</div>
-                    <div class="moon">🌙</div>
-                    <div class="stars">
-                        <span class="star">⭐</span>
-                        <span class="star">✨</span>
-                        <span class="star">🌟</span>
-                        <span class="star">💫</span>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <div class="stat-value" id="totalSupply">1B</div>
+                        <div class="stat-label">Total Supply</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="holders">-</div>
+                        <div class="stat-label">Holders</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="marketCap">-</div>
+                        <div class="stat-label">Market Cap</div>
                     </div>
                 </div>
             </div>
-            <div class="hero-stats">
-                <div class="stat">
-                    <span class="stat-number" data-target="1000000">0</span>
-                    <span class="stat-label">Holders</span>
+            <div class="hero-visual">
+                <div class="floating-cloud">
+                    <i class="fas fa-cloud"></i>
                 </div>
-                <div class="stat">
-                    <span class="stat-number" data-target="420">0</span>
-                    <span class="stat-label">% Gains</span>
-                </div>
-                <div class="stat">
-                    <span class="stat-number" data-target="69">0</span>
-                    <span class="stat-label">Days to Moon</span>
+                <div class="token-logo">
+                    <span class="token-symbol">T9C</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- About Section -->
-    <section id="about" class="about">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Why DogeMoon? 🤔</h2>
-                <p class="section-subtitle">Because we're not just another meme coin - we're a lifestyle!</p>
+    <!-- Wallet Info Panel -->
+    <div class="wallet-panel" id="walletPanel" style="display: none;">
+        <div class="wallet-info">
+            <div class="wallet-header">
+                <h3>Your Wallet</h3>
+                <button class="close-btn" id="closeWallet">&times;</button>
             </div>
-            <div class="about-grid">
-                <div class="about-card">
-                    <div class="card-icon">🚀</div>
-                    <h3>To The Moon</h3>
-                    <p>Our only destination is the moon. No stops, no breaks, just pure rocket fuel!</p>
+            <div class="wallet-address">
+                <span id="walletAddress">Not connected</span>
+            </div>
+            <div class="wallet-balance">
+                <div class="balance-item">
+                    <span class="balance-label">T9C Balance:</span>
+                    <span class="balance-value" id="t9cBalance">0</span>
                 </div>
-                <div class="about-card">
-                    <div class="card-icon">💎</div>
-                    <h3>Diamond Hands</h3>
-                    <p>Our community has the strongest diamond hands in the galaxy. We don't sell, we HODL!</p>
+                <div class="balance-item">
+                    <span class="balance-label">ETH Balance:</span>
+                    <span class="balance-value" id="ethBalance">0</span>
                 </div>
-                <div class="about-card">
-                    <div class="card-icon">🎭</div>
-                    <h3>Meme Magic</h3>
-                    <p>Powered by the finest memes and the dankest of dreams. Much magic, very power!</p>
+            </div>
+            <div class="wallet-actions">
+                <button class="btn btn-primary btn-small" id="refreshBalance">
+                    <i class="fas fa-sync-alt"></i>
+                    Refresh
+                </button>
+                <button class="btn btn-secondary btn-small" id="disconnectWallet">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Disconnect
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">Why Choose TotheNineCloud?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <h3>Reflection Rewards</h3>
+                    <p>Earn passive income just by holding T9C tokens. 2% of every transaction is redistributed to holders.</p>
                 </div>
-                <div class="about-card">
-                    <div class="card-icon">🌍</div>
-                    <h3>Global Community</h3>
-                    <p>Join millions of fellow moon travelers from around the world on this epic journey!</p>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Anti-Whale Protection</h3>
+                    <p>Smart contract limits prevent large transactions and protect against market manipulation.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <h3>Deflationary Mechanism</h3>
+                    <p>Tokens can be burned to reduce supply and increase scarcity, driving long-term value.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Community Driven</h3>
+                    <p>Decisions are made by the community. Your voice matters in shaping T9C's future.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Tokenomics Section -->
-    <section id="tokenomics" class="tokenomics">
+    <section class="tokenomics" id="tokenomics">
         <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Tokenomics 📊</h2>
-                <p class="section-subtitle">Fair launch, fair distribution, fair moon mission!</p>
-            </div>
-            <div class="tokenomics-content">
-                <div class="tokenomics-chart">
-                    <div class="chart-container">
+            <h2 class="section-title">Tokenomics</h2>
+            <div class="tokenomics-grid">
+                <div class="tokenomics-card">
+                    <div class="tokenomics-chart">
                         <canvas id="tokenomicsChart"></canvas>
                     </div>
                 </div>
-                <div class="tokenomics-info">
-                    <div class="token-details">
-                        <h3>Token Details</h3>
-                        <div class="detail-item">
-                            <span class="detail-label">Total Supply:</span>
-                            <span class="detail-value">1,000,000,000,000 DMOON</span>
-                        </div>
-                        <div class="detail-item">
-                            <span class="detail-label">Liquidity Pool:</span>
-                            <span class="detail-value">50% (Locked Forever)</span>
-                        </div>
-                        <div class="detail-item">
-                            <span class="detail-label">Community:</span>
-                            <span class="detail-value">30% (Fair Distribution)</span>
-                        </div>
-                        <div class="detail-item">
-                            <span class="detail-label">Marketing:</span>
-                            <span class="detail-value">15% (Moon Marketing)</span>
-                        </div>
-                        <div class="detail-item">
-                            <span class="detail-label">Team:</span>
-                            <span class="detail-value">5% (Vested 2 Years)</span>
-                        </div>
+                <div class="tokenomics-details">
+                    <div class="tokenomics-item">
+                        <div class="tokenomics-label">Total Supply</div>
+                        <div class="tokenomics-value">1,000,000,000 T9C</div>
                     </div>
-                    <div class="token-features">
-                        <h3>Features</h3>
-                        <ul>
-                            <li><i class="fas fa-check"></i> No team tokens unlocked</li>
-                            <li><i class="fas fa-check"></i> Liquidity locked forever</li>
-                            <li><i class="fas fa-check"></i> Anti-whale mechanism</li>
-                            <li><i class="fas fa-check"></i> Deflationary burns</li>
-                            <li><i class="fas fa-check"></i> Community governance</li>
-                        </ul>
+                    <div class="tokenomics-item">
+                        <div class="tokenomics-label">Reflection Fee</div>
+                        <div class="tokenomics-value">2%</div>
+                    </div>
+                    <div class="tokenomics-item">
+                        <div class="tokenomics-label">Max Transaction</div>
+                        <div class="tokenomics-value">1% of supply</div>
+                    </div>
+                    <div class="tokenomics-item">
+                        <div class="tokenomics-label">Max Wallet</div>
+                        <div class="tokenomics-value">2% of supply</div>
+                    </div>
+                    <div class="tokenomics-item">
+                        <div class="tokenomics-label">Contract Address</div>
+                        <div class="tokenomics-value contract-address" id="contractAddress">
+                            Deploy to see address
+                        </div>
                     </div>
                 </div>
             </div>
@@ -170,51 +201,36 @@
     </section>
 
     <!-- Roadmap Section -->
-    <section id="roadmap" class="roadmap">
+    <section class="roadmap" id="roadmap">
         <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Roadmap to the Moon 🗺️</h2>
-                <p class="section-subtitle">Our journey from Earth to the Moon and beyond!</p>
-            </div>
+            <h2 class="section-title">Roadmap to the Clouds</h2>
             <div class="roadmap-timeline">
-                <div class="timeline-item completed">
-                    <div class="timeline-icon">🚀</div>
-                    <div class="timeline-content">
+                <div class="roadmap-item completed">
+                    <div class="roadmap-marker"></div>
+                    <div class="roadmap-content">
                         <h3>Phase 1: Launch</h3>
-                        <p>Token creation, website launch, and initial community building</p>
-                        <span class="timeline-status">Completed ✅</span>
+                        <p>Smart contract deployment, website launch, and initial community building.</p>
                     </div>
                 </div>
-                <div class="timeline-item completed">
-                    <div class="timeline-icon">📱</div>
-                    <div class="timeline-content">
-                        <h3>Phase 2: Social Media</h3>
-                        <p>Twitter, Telegram, and Discord communities established</p>
-                        <span class="timeline-status">Completed ✅</span>
+                <div class="roadmap-item current">
+                    <div class="roadmap-marker"></div>
+                    <div class="roadmap-content">
+                        <h3>Phase 2: Growth</h3>
+                        <p>Marketing campaigns, DEX listings, and community expansion.</p>
                     </div>
                 </div>
-                <div class="timeline-item active">
-                    <div class="timeline-icon">💰</div>
-                    <div class="timeline-content">
-                        <h3>Phase 3: Exchange Listings</h3>
-                        <p>Getting listed on major DEXs and CEXs</p>
-                        <span class="timeline-status">In Progress 🔄</span>
+                <div class="roadmap-item">
+                    <div class="roadmap-marker"></div>
+                    <div class="roadmap-content">
+                        <h3>Phase 3: Utility</h3>
+                        <p>NFT collection, staking rewards, and DeFi integrations.</p>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-icon">🎮</div>
-                    <div class="timeline-content">
-                        <h3>Phase 4: NFT Collection</h3>
-                        <p>Launch exclusive DogeMoon NFT collection</p>
-                        <span class="timeline-status">Coming Soon 🔜</span>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-icon">🌙</div>
-                    <div class="timeline-content">
-                        <h3>Phase 5: Moon Landing</h3>
-                        <p>Achieve moon status and establish lunar base</p>
-                        <span class="timeline-status">Soon™ 🌙</span>
+                <div class="roadmap-item">
+                    <div class="roadmap-marker"></div>
+                    <div class="roadmap-content">
+                        <h3>Phase 4: Cloud Nine</h3>
+                        <p>Major exchange listings, partnerships, and ecosystem expansion.</p>
                     </div>
                 </div>
             </div>
@@ -222,44 +238,26 @@
     </section>
 
     <!-- Community Section -->
-    <section id="community" class="community">
+    <section class="community" id="community">
         <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Join the Pack 🐺</h2>
-                <p class="section-subtitle">Connect with fellow moon travelers!</p>
-            </div>
+            <h2 class="section-title">Join the Cloud Community</h2>
             <div class="community-links">
-                <a href="#" class="community-link twitter">
+                <a href="#" class="community-link">
                     <i class="fab fa-twitter"></i>
                     <span>Twitter</span>
-                    <span class="follower-count">100K+</span>
                 </a>
-                <a href="#" class="community-link telegram">
+                <a href="#" class="community-link">
                     <i class="fab fa-telegram"></i>
                     <span>Telegram</span>
-                    <span class="follower-count">50K+</span>
                 </a>
-                <a href="#" class="community-link discord">
+                <a href="#" class="community-link">
                     <i class="fab fa-discord"></i>
                     <span>Discord</span>
-                    <span class="follower-count">25K+</span>
                 </a>
-                <a href="#" class="community-link reddit">
+                <a href="#" class="community-link">
                     <i class="fab fa-reddit"></i>
                     <span>Reddit</span>
-                    <span class="follower-count">75K+</span>
                 </a>
-            </div>
-            <div class="newsletter">
-                <h3>Stay Updated 📧</h3>
-                <p>Get the latest DogeMoon news and updates!</p>
-                <form class="newsletter-form">
-                    <input type="email" placeholder="Your email address" required>
-                    <button type="submit">
-                        <i class="fas fa-rocket"></i>
-                        Subscribe
-                    </button>
-                </form>
             </div>
         </div>
     </section>
@@ -268,55 +266,25 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <div class="footer-section">
-                    <div class="footer-logo">
-                        <span class="logo-icon">🐕</span>
-                        <span class="logo-text">DogeMoon</span>
-                    </div>
-                    <p>The meme coin that's actually going to the moon! 🚀</p>
-                    <div class="footer-social">
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-telegram"></i></a>
-                        <a href="#"><i class="fab fa-discord"></i></a>
-                        <a href="#"><i class="fab fa-reddit"></i></a>
-                    </div>
+                <div class="footer-brand">
+                    <i class="fas fa-cloud"></i>
+                    <span>TotheNineCloud</span>
                 </div>
-                <div class="footer-section">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="#about">About</a></li>
-                        <li><a href="#tokenomics">Tokenomics</a></li>
-                        <li><a href="#roadmap">Roadmap</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Resources</h4>
-                    <ul>
-                        <li><a href="#">Whitepaper</a></li>
-                        <li><a href="#">Audit Report</a></li>
-                        <li><a href="#">Contract</a></li>
-                        <li><a href="#">CoinGecko</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Support</h4>
-                    <ul>
-                        <li><a href="#">Help Center</a></li>
-                        <li><a href="#">Contact Us</a></li>
-                        <li><a href="#">Bug Reports</a></li>
-                        <li><a href="#">Feature Requests</a></li>
-                    </ul>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Contact</a>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2024 DogeMoon. All rights reserved. Built with 💎 hands and 🚀 dreams!</p>
-                <p class="disclaimer">This is not financial advice. DYOR before investing. Much wow, very risk!</p>
+                <p>&copy; 2024 TotheNineCloud. All rights reserved. Reach for the clouds! ☁️</p>
             </div>
         </div>
     </footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.ethers.io/lib/ethers-5.7.2.umd.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

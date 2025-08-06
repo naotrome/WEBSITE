@@ -1,0 +1,26 @@
+{
+  "name": "tothe-nine-cloud",
+  "version": "1.0.0",
+  "description": "TotheNineCloud - A meme coin that reaches for the clouds ☁️",
+  "main": "index.js",
+  "scripts": {
+    "compile": "hardhat compile",
+    "deploy": "hardhat run scripts/deploy.js",
+    "test": "hardhat test",
+    "node": "hardhat node",
+    "dev": "live-server --port=3000"
+  },
+  "keywords": ["meme", "coin", "cryptocurrency", "ethereum", "defi"],
+  "author": "TotheNineCloud Team",
+  "license": "MIT",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "hardhat": "^2.19.0",
+    "live-server": "^1.2.2"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.0.0",
+    "ethers": "^6.8.0",
+    "web3": "^4.2.0"
+  }
+}
