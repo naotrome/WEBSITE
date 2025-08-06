@@ -337,6 +337,127 @@ body {
     background: linear-gradient(135deg, #ffffff 0%, #f0fff0 100%);
 }
 
+/* Chart Section */
+.chart-section {
+    padding: 100px 0;
+    background: linear-gradient(135deg, #0a1a2e 0%, #16213e 50%, #1a2332 100%);
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.chart-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 20%, rgba(30, 144, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(46, 139, 87, 0.1) 0%, transparent 50%);
+    animation: float 8s ease-in-out infinite;
+}
+
+.chart-section .section-title {
+    color: white;
+    background: none;
+    -webkit-text-fill-color: white;
+}
+
+.chart-section .section-subtitle {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.chart-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+}
+
+.chart-wrapper {
+    position: relative;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    padding: 2rem;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    height: 400px;
+}
+
+.jupiter-destination {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: pulse 3s ease-in-out infinite;
+}
+
+.jupiter-planet {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+    filter: drop-shadow(0 0 20px rgba(255, 165, 0, 0.5));
+}
+
+.jupiter-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #FFD700;
+    letter-spacing: 2px;
+}
+
+.chart-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.price-display {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 2rem;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.current-price {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #32CD32;
+    margin-bottom: 0.5rem;
+}
+
+.price-change {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #90EE90;
+}
+
+.chart-description {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.05);
+    padding: 2rem;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Chart Canvas Styles */
+#jupiterChart {
+    width: 100% !important;
+    height: 300px !important;
+}
+
+/* Section Styles */
 .section-header {
     text-align: center;
     margin-bottom: 4rem;
@@ -646,6 +767,23 @@ body {
     }
 
     .section-title {
+        font-size: 2rem;
+    }
+
+    .chart-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .chart-wrapper {
+        height: 300px;
+    }
+
+    .jupiter-planet {
+        font-size: 2rem;
+    }
+
+    .current-price {
         font-size: 2rem;
     }
 }

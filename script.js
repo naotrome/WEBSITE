@@ -83,7 +83,122 @@ document.addEventListener('DOMContentLoaded', () => {
         card.classList.add('loading');
         observer.observe(card);
     });
+    
+    // Initialize Jupiter chart
+    createJupiterChart();
 });
+
+// Jupiter Chart
+function createJupiterChart() {
+    const ctx = document.getElementById('jupiterChart');
+    if (!ctx) return;
+    
+    // Generate data points that show exponential growth toward Jupiter
+    const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const data = [0.00001234, 0.00002456, 0.00005123, 0.00012345, 0.00034567, 0.00089123, 0.00234567, 0.00678901, 0.01234567, 0.03456789, 0.08912345, 0.23456789];
+    
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'ToTheJupiter Coin Price ($)',
+                data: data,
+                borderColor: '#32CD32',
+                backgroundColor: 'rgba(50, 205, 50, 0.1)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#32CD32',
+                pointBorderColor: '#ffffff',
+                pointBorderWidth: 2,
+                pointRadius: 6,
+                pointHoverRadius: 8,
+                pointHoverBackgroundColor: '#FFD700',
+                pointHoverBorderColor: '#ffffff',
+                pointHoverBorderWidth: 3
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                    titleColor: '#ffffff',
+                    bodyColor: '#ffffff',
+                    borderColor: '#32CD32',
+                    borderWidth: 1,
+                    cornerRadius: 10,
+                    displayColors: false,
+                    callbacks: {
+                        title: function(context) {
+                            return `${context[0].label} 2024`;
+                        },
+                        label: function(context) {
+                            return `$${context.parsed.y.toFixed(8)} 🚀`;
+                        },
+                        afterLabel: function(context) {
+                            const index = context.dataIndex;
+                            if (index === data.length - 1) {
+                                return 'Destination: Jupiter! 🪐';
+                            }
+                            return 'Next stop: Jupiter! 🌟';
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    grid: {
+                        color: 'rgba(255, 255, 255, 0.1)',
+                        borderColor: 'rgba(255, 255, 255, 0.3)'
+                    },
+                    ticks: {
+                        color: 'rgba(255, 255, 255, 0.8)',
+                        font: {
+                            size: 12,
+                            weight: '500'
+                        }
+                    }
+                },
+                y: {
+                    type: 'logarithmic',
+                    grid: {
+                        color: 'rgba(255, 255, 255, 0.1)',
+                        borderColor: 'rgba(255, 255, 255, 0.3)'
+                    },
+                    ticks: {
+                        color: 'rgba(255, 255, 255, 0.8)',
+                        font: {
+                            size: 12,
+                            weight: '500'
+                        },
+                        callback: function(value) {
+                            return '$' + value.toFixed(8);
+                        }
+                    }
+                }
+            },
+            interaction: {
+                intersect: false,
+                mode: 'index'
+            },
+            animation: {
+                duration: 3000,
+                easing: 'easeOutQuart'
+            },
+            elements: {
+                line: {
+                    borderJoinStyle: 'round'
+                }
+            }
+        }
+    });
+}
 
 // Email validation
 function isValidEmail(email) {
