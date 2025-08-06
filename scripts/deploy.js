@@ -34,22 +34,23 @@ async function main() {
   console.log("Reflection Fee:", await totheNineCloud.reflectionFee(), "%");
   
   // Save deployment info
+  const network = await ethers.provider.getNetwork();
   const deploymentInfo = {
-    network: (await ethers.provider.getNetwork()).name,
-    chainId: (await ethers.provider.getNetwork()).chainId,
+    network: network.name,
+    chainId: network.chainId.toString(), // Convert BigInt to string
     contractAddress: contractAddress,
     deployerAddress: deployerAddress,
-    blockNumber: await ethers.provider.getBlockNumber(),
+    blockNumber: (await ethers.provider.getBlockNumber()).toString(), // Convert to string
     timestamp: new Date().toISOString(),
-    transactionHash: totheNineCloud.deploymentTransaction()?.hash
+    transactionHash: totheNineCloud.deploymentTransaction()?.hash || "N/A"
   };
   
   console.log("\n💾 Deployment Info:");
   console.log(JSON.stringify(deploymentInfo, null, 2));
   
   // Verify contract on Etherscan (if not on localhost)
-  const network = await ethers.provider.getNetwork();
-  if (network.chainId !== 1337n && network.chainId !== 31337n) {
+  const networkInfo = await ethers.provider.getNetwork();
+  if (networkInfo.chainId !== 1337n && networkInfo.chainId !== 31337n) {
     console.log("\n🔍 Waiting for block confirmations...");
     await totheNineCloud.deploymentTransaction()?.wait(5);
     

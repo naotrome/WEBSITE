@@ -10,7 +10,13 @@
     "node": "hardhat node",
     "dev": "live-server --port=3000"
   },
-  "keywords": ["meme", "coin", "cryptocurrency", "ethereum", "defi"],
+  "keywords": [
+    "meme",
+    "coin",
+    "cryptocurrency",
+    "ethereum",
+    "defi"
+  ],
   "author": "TotheNineCloud Team",
   "license": "MIT",
   "devDependencies": {
@@ -19,7 +25,7 @@
     "live-server": "^1.2.2"
   },
   "dependencies": {
-    "@openzeppelin/contracts": "^5.0.0",
+    "@openzeppelin/contracts": "^5.4.0",
     "ethers": "^6.8.0",
     "web3": "^4.2.0"
   }
